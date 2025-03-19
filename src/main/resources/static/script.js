@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 return response.json();
             })
             .then(data => {
-                alert("✅ Account Created Successfully!\nAccount ID: " + data.id);
+                showPopup(data,"Account Created Successfully!")
                 closeForm(); // Close the form after successful account creation
             })
             .catch(error => {
@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 return response.json();
             })
             .then(data => {
-                alert(`✅ Deposit Successful!\nAccount ID: ${data.id}\nBalance: ${data.balance}`);
+                showPopup(data,"Deposit Successful!")
                 closeForm(); // Close the form after successful deposit
             })
             .catch(error => {
@@ -112,7 +112,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 return response.json();
             })
             .then(data => {
-                alert(`✅ Withdraw Successful!\nAccount ID: ${data.id}\nBalance: ${data.balance}`);
+                showPopup(data,"Withdraw Successful!")
                 closeForm(); // Close the form after successful deposit
             })
             .catch(error => {
@@ -169,7 +169,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 return response.json();
             })
             .then(data => {
-                alert(`✅ Fetching Account Successful!\nAccount ID: ${data.id}\nBalance: ${data.balance}`);
+                showPopup(data,"Fetched data Successfully !")
                 closeForm(); // Close the form after successful deposit
             })
             .catch(error => {
@@ -177,9 +177,101 @@ document.addEventListener("DOMContentLoaded", function () {
                 alert("❌ Fetching Account failed.");
             });
     }
-
-
     document.querySelector("button[onclick='fetchAccount()']").addEventListener("click", () => fetchAccount());
+
+
+
+// Function to Show 3D Popup with Account Details
+    function showPopup(account, tag) {
+        closePopup();
+
+        const popupContainer = document.createElement("div");
+        popupContainer.classList.add("popup-container");
+
+        popupContainer.innerHTML = `
+        <div class="popup">
+            <h2>✅ ${tag}</h2>
+            <p><strong>Account ID:</strong> ${account.id}</p>
+            <p><strong>Holder Name:</strong> ${account.accountHolderName}</p>
+            <p><strong>Balance:</strong> ₹${account.balance.toFixed(2)}</p>
+            <button id="closePopupBtn">Close</button>
+        </div>
+    `;
+
+        document.body.appendChild(popupContainer);
+        document.getElementById("closePopupBtn").addEventListener("click", closePopup);
+    }
+
+// Function to Close the Popup
+    function closePopup() {
+        const popup = document.querySelector(".popup-container");
+        if (popup) popup.remove();
+    }
+
+
+
+// Function to Fetch All Accounts and Show in Popup List
+    function showAllAccounts() {
+        fetch("/api/accounts") // API call to get all accounts
+            .then(response => {
+                if (!response.ok) throw new Error("Failed to Fetch Accounts.");
+                return response.json();
+            })
+            .then(accounts => {
+                if (accounts.length === 0) {
+                    alert("❌ No Accounts Found.");
+                    return;
+                }
+                showPopupList(accounts);
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("❌ Fetching Accounts failed.");
+            });
+    }
+
+// Function to Show 3D Popup List of All Accounts in Grid View
+    function showPopupList(accounts) {
+        closePopup();
+
+        const popupContainer = document.createElement("div");
+        popupContainer.classList.add("popup-container-list");
+
+        let accountListHTML = `
+        <div class="popup_list">
+            <h2>✅ Account List</h2>
+            <div class="account-list">
+    `;
+
+        accounts.forEach(account => {
+            accountListHTML += `
+            <div class="account-card">
+                <p><strong>Account ID:</strong> ${account.id}</p>
+                <p><strong>Holder Name:</strong> ${account.accountHolderName}</p>
+                <p><strong>Balance:</strong> ₹${account.balance.toFixed(2)}</p>
+            </div>
+        `;
+        });
+
+        accountListHTML += `
+            </div>
+            <button id="closePopupBtnList">Close</button>
+        </div>
+    `;
+
+        popupContainer.innerHTML = accountListHTML;
+        document.body.appendChild(popupContainer);
+
+        // Close Button Event Listener
+        document.getElementById("closePopupBtnList").addEventListener("click", closePopupList);
+    }
+
+// Function to Close the Popup
+    function closePopupList() {
+        const popup = document.querySelector(".popup-container-list");
+        if (popup) popup.remove();
+    }
+
 
 
     // Attach event listeners to buttons
@@ -188,7 +280,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     document.querySelector("button[onclick='getAllAccounts()']").addEventListener("click", function () {
-        showForm("fetchAllAccount");
+        showAllAccounts();
     });
 
     document.querySelector("button[onclick='fetchAccountForm()']").addEventListener("click", function () {
@@ -211,4 +303,16 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll(".close-btn").forEach(button => {
         button.addEventListener("click", closeForm);
     });
+
+
+    function openPopupBlur() {
+        document.getElementById("formPopup").style.display = "block"; // Show Popup
+        document.body.classList.add("popup-active"); // Add Blur Effect
+    }
+
+    function closePopupBlur() {
+        document.getElementById("formPopup").style.display = "none"; // Hide Popup
+        document.body.classList.remove("popup-active"); // Remove Blur Effect
+    }
+
 });
