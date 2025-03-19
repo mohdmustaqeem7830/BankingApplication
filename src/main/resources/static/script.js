@@ -64,31 +64,24 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        const accountData = {
-            depositId: depositId,
-            depositAmmount: parseFloat(depositAmmount)
-        };
+        const accountData = { amount: parseFloat(depositAmmount) };
 
-        fetch("/{id}/deposit", {
+        fetch(`/api/accounts/${depositId}/deposit`, {
             method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(accountData)
         })
             .then(response => {
-                if (!response.ok) {
-                    throw new Error("Failed to Deposit.");
-                }
+                if (!response.ok) throw new Error("Failed to deposit.");
                 return response.json();
             })
             .then(data => {
-                alert("✅ Deposit Successfully!\nAccount ID: " + data.id+"\nBalance : " + data.balance);
-                closeForm(); // Close the form after successful account creation
+                alert(`✅ Deposit Successful!\nAccount ID: ${data.id}\nBalance: ${data.balance}`);
+                closeForm(); // Close the form after successful deposit
             })
             .catch(error => {
                 console.error("Error:", error);
-                alert("❌ Deposition failed.");
+                alert("❌ Deposit failed.");
             });
     }
 
@@ -96,8 +89,98 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelector("button[onclick='deposit()']").addEventListener("click", () => deposit());
 
     //Function for Withdraw
+
+
+    function withdraw() {
+        const withdrawId = document.getElementById("withdrawId").value;
+        const withdrawAmmount = document.getElementById("withdrawAmmount").value;
+
+        if (!withdrawId || !withdrawAmmount) {
+            alert("Please enter all the Field.");
+            return;
+        }
+
+        const accountData = { amount: parseFloat(withdrawAmmount) };
+
+        fetch(`/api/accounts/${withdrawId}/withdraw`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(accountData)
+        })
+            .then(response => {
+                if (!response.ok) throw new Error("Failed to Withdraw.");
+                return response.json();
+            })
+            .then(data => {
+                alert(`✅ Withdraw Successful!\nAccount ID: ${data.id}\nBalance: ${data.balance}`);
+                closeForm(); // Close the form after successful deposit
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("❌ Withdraw failed.");
+            });
+    }
+
+
+    document.querySelector("button[onclick='withdraw()']").addEventListener("click", () => withdraw());
     //Function for delete
+
+
+    function deleteAccount() {
+        const deleteId = document.getElementById("deleteId").value;
+
+        if (!deleteId) {
+            alert("Please enter the Id.");
+            return;
+        }
+
+        fetch(`/api/accounts/${deleteId}`, {
+            method: "DELETE"
+        })
+            .then(response => {
+                if (!response.ok) throw new Error("Failed to delete account.");
+                alert("✅ Account Deleted Successfully!");
+                closeForm(); // Close the form after successful deletion
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("❌ Failed to delete account.");
+            });
+    }
+
+    document.querySelector("button[onclick='deletAccount()']").addEventListener("click", () => deleteAccount());
+
     //Function for FetchAccount
+
+
+    function fetchAccount() {
+        const accountId = document.getElementById("accountId").value;
+
+        if (!accountId) {
+            alert("Please enter the Id.");
+            return;
+        }
+
+        fetch(`/api/accounts/${accountId}`, {
+            method: "GET"
+        })
+            .then(response => {
+                if (!response.ok) throw new Error("Failed to Fetch Account.");
+                return response.json();
+            })
+            .then(data => {
+                alert(`✅ Fetching Account Successful!\nAccount ID: ${data.id}\nBalance: ${data.balance}`);
+                closeForm(); // Close the form after successful deposit
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("❌ Fetching Account failed.");
+            });
+    }
+
+
+    document.querySelector("button[onclick='fetchAccount()']").addEventListener("click", () => fetchAccount());
+
 
     // Attach event listeners to buttons
     document.querySelector("button[onclick='createForm()']").addEventListener("click", function () {
