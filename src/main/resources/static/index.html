@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banking App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="container">
+    <h1 class="title">Banking Application</h1>
+    <div class="buttons">
+        <button onclick="createForm()">Create Account</button>
+        <button onclick="fetchAccountForm()">Fetch Accounts</button>
+        <button onclick="getAllAccounts()">Fetch All Accounts</button>
+        <button onclick="depositform()">Deposit</button>
+        <button onclick="withdrawform()">Withdraw</button>
+        <button onclick="deleteAccountform()">Delete Account</button>
+    </div>
+</div>
+
+<!-- 🚀 Animated Popup Form for creation account -->
+<div class="form-popup" id="createAccountForm">
+    <div class="form-container">
+        <h2>Create Account</h2>
+        <label>Account Holder Name</label>
+        <input type="text" id="accountHolderName" placeholder="Enter Name">
+
+        <label>Initial Balance</label>
+        <input type="number" id="initialBalance" placeholder="Enter Balance">
+
+        <button onclick="submitAccount()">Create Account</button>
+        <br>
+        <button class="close-btn" onclick="closeForm()">Cancel</button>
+    </div>
+</div><!-- 🚀 Animated Popup Form for fetching all account -->
+<div class="form-popup" id="fetchAllAccount">
+    <div class="form-container">
+        <h2>ALL Account </h2>
+
+    </div>
+</div><!-- 🚀 Animated Popup Form for withdraw-->
+<div class="form-popup" id="withdraw">
+    <div class="form-container">
+        <h2>Withdraw</h2>
+        <label>Account ID</label>
+        <input type="number" id="withdrawId" placeholder="Enter Id">
+        <label>Withdraw Amount</label>
+        <input type="number" id="withdrawAmmount" placeholder="Enter Amount">
+
+        <button onclick="withdraw()">Withdraw Now</button>
+        <br>
+        <button class="close-btn" onclick="closeForm()">Cancel</button>
+    </div>
+</div><!-- 🚀 Animated Popup Form -->
+
+
+</div><!-- 🚀 Animated Popup Form for withdraw-->
+<div class="form-popup" id="deposit">
+    <div class="form-container">
+        <h2>Deposit</h2>
+        <label>Account ID</label>
+        <input type="number" id="depositId" placeholder="Enter Id">
+        <label>Deposit Amount</label>
+        <input type="number" id="depositAmmount" placeholder="Enter Amount">
+        <button onclick="deposit()">Deposit Now</button>
+        <br>
+        <button class="close-btn" onclick="closeForm()">Cancel</button>
+    </div>
+</div><!-- 🚀 Animated Popup Form -->
+
+
+
+
+<div class="form-popup" id="fetchAccount">
+    <div class="form-container">
+        <h2>Fetch Account</h2>
+        <label>Account ID</label>
+        <input type="number" id="accountId" placeholder="Enter Id">
+
+        <button onclick="fetchAccount()">Fetch Account</button>
+        <br>
+        <button class="close-btn" onclick="closeForm()">Cancel</button>
+    </div>
+</div>
+<div class="form-popup" id="deleteAccount">
+    <div class="form-container">
+        <h2>Delete Account</h2>
+        <label>Account ID</label>
+        <input type="number" id="deleteId" placeholder="Enter Id">
+
+        <button onclick="deletAccount()">Fetch Account</button>
+        <br>
+        <button class="close-btn" onclick="closeForm()">Cancel</button>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -20,18 +20,23 @@ public class AccountController {
         this.accountService = accountService;
     }
 
+
+    //api for create Account
+
     @PostMapping   //add account Rest APi
     public ResponseEntity<AccountDto> addAccount(@RequestBody AccountDto accountDto) {
 
     return  new ResponseEntity<>(accountService.createAccount(accountDto), HttpStatus.CREATED);
     }
 
-
+    //Api for fetch Account
     @GetMapping("/{id}")
     public ResponseEntity<AccountDto> getAccountById(@PathVariable Long id) {
         AccountDto accountDto = accountService.getAccountById(id);
         return ResponseEntity.ok(accountDto);
     }
+
+    //Api for Deposit
     @PutMapping("/{id}/deposit")
     public ResponseEntity<AccountDto> deposit(@PathVariable Long id,@RequestBody Map<String,Double> request) {
         Double amount = request.get("amount");
@@ -41,7 +46,7 @@ public class AccountController {
 
     }
 
-
+    //Api for Withdraw
     @PutMapping("/{id}/withdraw")
     public ResponseEntity<AccountDto> withdraw(@PathVariable Long id,@RequestBody Map<String,Double> request) {
         Double amount = request.get("amount");
@@ -49,14 +54,14 @@ public class AccountController {
         return ResponseEntity.ok(accountDto);
 
     }
-
+    //Api for fetch All Account
     @GetMapping()
     public ResponseEntity<List<AccountDto>>  getAllAccounts() {
         List<AccountDto> accountDtos = accountService.getAllAccounts();
         return ResponseEntity.ok(accountDtos);
     }
 
-
+    // Api for delete Account
     @DeleteMapping(("/{id}"))
     public ResponseEntity<String> deleteAccount(@PathVariable Long id) {
         accountService.deleteAccount(id);
