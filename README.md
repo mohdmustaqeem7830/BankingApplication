@@ -32,5 +32,5 @@ A full-stack **Banking Application** built using **Spring Boot**, **Hibernate JP
 banking-application/ │ ├── src/ │ ├── main/ │ │ ├── java/ │ │ │ └── com.example.banking/ │ │ │ ├── controller/ │ │ │ ├── service/ │ │ │ ├── repository/ │ │ │ └── model/ │ │ └── resources/ │ │ ├── application.properties │ │ └── static/ │ │ ├── index.html │ │ └── styles.css / script.js │ ├── pom.xml └── README.md
 
 Watch the full working demo of the project here:  
-🔗 
+🔗https://www.linkedin.com/posts/mohd-mustaqeem-india_springboot-java-fullstackdeveloper-activity-7318506277158928387-OAES?utm_source=share&utm_medium=member_desktop&rcm=ACoAADja47sBi9tyt80U_xFR99TH7drQM5Fk7QY 
 
